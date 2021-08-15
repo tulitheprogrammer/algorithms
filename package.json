@@ -5,6 +5,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^16.6.1",
+    "immer": "^9.0.5",
     "ts-node": "^10.2.0",
     "typescript": "^4.3.5"
   }
