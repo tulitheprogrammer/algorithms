@@ -4,6 +4,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
     "@types/node": "^16.6.1",
     "immer": "^9.0.5",
     "ts-node": "^10.2.0",
