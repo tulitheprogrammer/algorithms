@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "BFS": "ts-node ./src/BFS.ts"
+    "BFS": "ts-node ./src/BFS.ts",
+    "linked": "ts-node ./src/dataStructures/linkedList"
   },
   "dependencies": {},
   "devDependencies": {
