@@ -1,12 +1,17 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "src",
     "noImplicitAny": false,
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "strict": false
+    "strict": false,
+    "paths": {
+      "@data-structures/*": ["dataStructures/*"],
+      "@exercises/*": ["exercises/*"]
+    }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.spec.ts"],
 }

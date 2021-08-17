@@ -1,19 +1,27 @@
 import { ListItem, ListItemType } from './listItem';
 import { DataType, BaseListItem, IOptions } from './types';
 
-export function appendHelper({ data, tail: currentTail }: { data: DataType; tail: ListItemType }) {
-  const newTail = new ListItem({ data, previous: currentTail });
-  currentTail.next = newTail;
+export function appendHelper({ data, head: currentHead, tail: currentTail }: { data: DataType; head: ListItemType; tail: ListItemType; }) {
+  let newHead: ListItemType = null;
+  let newTail: ListItemType = null;
+
+  const newListItem = new ListItem({ data, previous: currentTail });
+  if (currentTail) {
+    currentTail.next = newListItem;
+    newTail = newListItem;
+  } else {
+    newHead = newTail = newListItem;
+  }
 
   console.log(
-    'NodeListManager -> append -> newTail ',
-    newTail.data,
+    'LinkedList -> append -> newTail ',
+    newListItem?.data,
     'after',
-    currentTail.data,
+    currentTail?.data,
     'added successfully !!!'
   );
 
-  return newTail;
+  return [ newHead, newTail];
 }
 
 export function findLastHelper() {

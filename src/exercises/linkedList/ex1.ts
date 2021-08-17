@@ -1,3 +1,5 @@
-import { getListFromArray } from '../../dataStructures/linkedList';
+import { getListFromArray, listToArray } from '../../dataStructures/linkedList';
 
-console.log(getListFromArray([45,33,21,212,55,2332]));
+const list = getListFromArray([45, 33, 21, 212, 55, 2332]);
+console.log('head: ', list.head?.next?.data);
+console.log('list: ', listToArray(list));
