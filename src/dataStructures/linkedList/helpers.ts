@@ -1,25 +1,25 @@
-import { ListNode } from './linkedList';
-import { ContentType, Item, IListNode, IOptions } from './types';
+import { ListItem, ListItemType } from './listItem';
+import { DataType, BaseListItem, IOptions } from './types';
 
-export function appendHelper(newContent: ContentType) {
-  const endNode = this.findLast();
-  const newLastNode = new ListNode(newContent);
-  newLastNode.previous = endNode;
-  endNode.next = newLastNode;
+export function appendHelper({ data, tail: currentTail }: { data: DataType; tail: ListItemType }) {
+  const newTail = new ListItem({ data, previous: currentTail });
+  currentTail.next = newTail;
 
   console.log(
-    'NodeListManager -> append -> newNode ',
-    newLastNode.content,'after',endNode.content,
+    'NodeListManager -> append -> newTail ',
+    newTail.data,
+    'after',
+    currentTail.data,
     'added successfully !!!'
   );
 
-  return newLastNode;
+  return newTail;
 }
 
 export function findLastHelper() {
   let steps = 0;
 
-  let current = this.firstNode;
+  let current = this.head;
 
   while (current.next) {
     current = current.next;
@@ -31,10 +31,10 @@ export function findLastHelper() {
   return current;
 }
 
-export function findByContentHelper(targetContent: ContentType) {
-  let current: IListNode = this.first;
+export function findByContentHelper(targetContent: DataType) {
+  let current: BaseListItem = this.head;
 
-  const isFound = (current: IListNode) => current.content === targetContent;
+  const isFound = (current: BaseListItem) => current.data === targetContent;
 
   if (isFound(current)) {
     return current;
@@ -52,19 +52,28 @@ export function findByContentHelper(targetContent: ContentType) {
 }
 
 export function removeHelper({ target, targetContent }: IOptions) {
-  if (target) {
-    if (target.previous) target.previous.next = target.next;
-    if (target.next) target.next.previous = target.previous;
+  let newHead = null;
+  let newTail = null;
 
-    if (target === this.firstNode) {
-      this.firstNode = target.next;
+  if (target) {
+    if (target === this.head) {
+      const newHead = this.head.next;
+    } else {
+      target.previous.next = target.next;
+    }
+    if (target === this.tail) {
+      const newTail = this.tail.previous;
+    } else {
+      target.next.previous = target.previous;
     }
 
     target.previous = target.next = null;
+
+    return [newHead, newTail];
   } else if (targetContent) {
     const targetNode = this.findByContentHelper(targetContent);
     if (targetNode) {
-      this.remove(targetNode);
+      return this.remove({ target: targetNode });
     }
   }
 }

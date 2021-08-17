@@ -1,25 +1,38 @@
 import { appendHelper, findByContentHelper, findLastHelper, removeHelper } from './helpers';
-import { IListNode, Item, ContentType } from './types';
+import { ListItem } from './listItem';
+import { BaseListItem, DataType, IOptions } from './types';
 
-export class ListNode implements IListNode {
-  readonly content: ContentType;
-  next: Item = null;
-  previous: Item = null;
+export class LinkedList {
+  head: BaseListItem;
+  tail: BaseListItem;
 
-  constructor(content: ContentType) {
-    this.content = content;
+  constructor(headData: DataType) {
+    this.head = this.tail = new ListItem({ data: headData });
+  }
+
+  append(data: DataType) {
+    this.tail = appendHelper({ data, tail: this.tail });
+  }
+
+  findLast = findLastHelper;
+  findByContent = findByContentHelper;
+  remove(params: IOptions) {
+    const [newHead, newTail] = removeHelper(params);
+    if (newHead) {
+      this.head = newHead;
+    }
+    if (newTail) {
+      this.tail = newTail;
+    }
   }
 }
 
-export class NodeListManager {
-  firstNode: IListNode = null;
+export function getListFromArray(data: DataType[]) {
+  const [firstData, ...restData] = data;
 
-  constructor(startNodeContent: ContentType) {
-    this.firstNode = new ListNode(startNodeContent);
-  }
+  let list = new LinkedList(firstData);
 
-  append = appendHelper;
-  findLast = findLastHelper;
-  findByContent = findByContentHelper;
-  remove = removeHelper;
+  restData.forEach((data) => list.append(data));
+
+  return list;
 }

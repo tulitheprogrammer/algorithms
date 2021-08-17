@@ -1,14 +1,14 @@
-export type ContentType = string | number;
+import { ListItemType } from './listItem';
 
-export type Item = IListNode | null;
+export type DataType = string | number;
 
 export interface IOptions {
-  target?: IListNode;
-  targetContent?: ContentType;
+  target?: BaseListItem;
+  targetContent?: DataType;
 }
 
-export interface IListNode {
-  content: ContentType;
-  next: Item;
-  previous: Item;
+export interface BaseListItem {
+  data: DataType;
+  next: ListItemType;
+  previous: ListItemType;
 }
