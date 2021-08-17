@@ -5,7 +5,7 @@ export function appendHelper({ data, head: currentHead, tail: currentTail }: { d
   let newHead: ListItemType = null;
   let newTail: ListItemType = null;
 
-  const newListItem = new ListItem({ data, previous: currentTail });
+  const newListItem = new ListItem({ data });
   if (currentTail) {
     currentTail.next = newListItem;
     newTail = newListItem;
@@ -59,23 +59,22 @@ export function findByContentHelper(targetContent: DataType) {
   return null;
 }
 
-export function removeHelper({ target, targetContent }: IOptions) {
+export function removeHelper({ target, previous, targetContent }: IOptions) {
   let newHead = null;
   let newTail = null;
 
   if (target) {
     if (target === this.head) {
-      const newHead = this.head.next;
+      newHead = this.head.next;
     } else {
-      target.previous.next = target.next;
+      previous.next = target.next;
     }
     if (target === this.tail) {
-      const newTail = this.tail.previous;
-    } else {
-      target.next.previous = target.previous;
+      previous.next = null;
+      newTail = previous;
     }
 
-    target.previous = target.next = null;
+    target.next = null;
 
     return [newHead, newTail];
   } else if (targetContent) {

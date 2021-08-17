@@ -1,7 +1,8 @@
 {
   "scripts": {
     "BFS": "ts-node ./src/BFS.ts",
-    "linked": "ts-node ./src/exercises/linkedList/ex1"
+    "linked": "ts-node ./src/exercises/linkedList/ex1",
+    "dlinked": "ts-node ./src/exercises/doublyLinkedList/ex1"
   },
   "dependencies": {},
   "devDependencies": {
