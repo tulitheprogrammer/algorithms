@@ -7,10 +7,6 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "strict": false,
-    "paths": {
-      "@data-structures/*": ["dataStructures/*"],
-      "@exercises/*": ["exercises/*"]
-    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"],

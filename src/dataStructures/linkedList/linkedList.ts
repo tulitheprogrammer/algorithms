@@ -1,10 +1,10 @@
 import { appendHelper, findByContentHelper, findLastHelper, removeHelper } from './helpers';
-import { ListItem } from './listItem';
-import { BaseListItem, DataType, IOptions } from './types';
+import { ListItem, ListItemType } from './listItem';
+import { DataType, IOptions } from './types';
 
 export class LinkedList {
-  head: BaseListItem;
-  tail: BaseListItem;
+  head: ListItemType;
+  tail: ListItemType;
 
   constructor(headData?: DataType) {
     this.head = this.tail = headData ? new ListItem({ data: headData }) : null;
@@ -46,9 +46,9 @@ export function getListFromArray(data: DataType[]) {
   return list;
 }
 
-export function listToArray(list: LinkedList) {
+export function listToArray({ head, list }: { head?: ListItemType; list?: LinkedList }) {
   const items = [];
-  let item = list.head;
+  let item = head ?? list?.head;
 
   while (item) {
     console.log('listToArray -> item data ->', item.data);
