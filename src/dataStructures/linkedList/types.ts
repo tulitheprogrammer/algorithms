@@ -2,13 +2,13 @@ import { ListItemType } from './listItem';
 
 export type DataType = string | number;
 
-export interface IOptions {
-  target?: BaseListItem;
-  previous?: BaseListItem;
-  targetContent?: DataType;
+export interface IOptions<T>{
+  target?: BaseListItem<T>;
+  previous?: BaseListItem<T>;
+  targetContent?: T;
 }
 
-export interface BaseListItem {
-  data: DataType;
-  next: ListItemType;
+export interface BaseListItem<T>{
+  data: T;
+  next: ListItemType<T>;
 }

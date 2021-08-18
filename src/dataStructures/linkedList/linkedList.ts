@@ -2,38 +2,50 @@ import { appendHelper, findByContentHelper, findLastHelper, removeHelper } from 
 import { ListItem, ListItemType } from './listItem';
 import { DataType, IOptions } from './types';
 
-export class LinkedList {
-  head: ListItemType;
-  tail: ListItemType;
+export class LinkedList<T> {
+  head: ListItemType<T>;
+  tail: ListItemType<T>;
+  size = 0;
 
-  constructor(headData?: DataType) {
+  constructor(headData?: T) {
     this.head = this.tail = headData ? new ListItem({ data: headData }) : null;
   }
 
-  append(data: DataType) {
+  append(data: T) {
+    console.log('append data: ', data, 'after', this.tail?.data);
     const [newHead, newTail] = appendHelper({ data, tail: this.tail, head: this.head });
+    console.log('after append: ', newHead?.data, newTail?.data);
     if (newHead) {
       this.head = newHead;
     }
     if (newTail) {
       this.tail = newTail;
     }
+    this.size++;
+    console.log('now size is ', this.size);
   }
 
   findLast = findLastHelper;
   findByContent = findByContentHelper;
-  remove(params: IOptions) {
-    const [newHead, newTail] = removeHelper(params);
+
+  remove(params: IOptions<T>): ListItemType<T> {
+    console.log('remove params', params);
+    const [newHead, newTail, target] = removeHelper(params);
+
+    if (!target) return null;
+
     if (newHead) {
       this.head = newHead;
     }
     if (newTail) {
       this.tail = newTail;
     }
+    this.size--;
+    return target;
   }
 }
 
-export function getListFromArray(data: DataType[]) {
+export function getListFromArray<T>(data: T[]) {
   console.log('input data: ', data);
   // const [firstData, ...restData] = data;
 
@@ -46,7 +58,7 @@ export function getListFromArray(data: DataType[]) {
   return list;
 }
 
-export function listToArray({ head, list }: { head?: ListItemType; list?: LinkedList }) {
+export function listToArray<T>({ head, list }: { head?: ListItemType<T>; list?: LinkedList<T> }) {
   const items = [];
   let item = head ?? list?.head;
 

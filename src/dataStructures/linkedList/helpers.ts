@@ -1,11 +1,22 @@
 import { ListItem, ListItemType } from './listItem';
-import { DataType, BaseListItem, IOptions } from './types';
+import { BaseListItem, IOptions } from './types';
 
-export function appendHelper({ data, head: currentHead, tail: currentTail }: { data: DataType; head: ListItemType; tail: ListItemType; }) {
-  let newHead: ListItemType = null;
-  let newTail: ListItemType = null;
+export function appendHelper<T>({
+  data,
+  head: currentHead,
+  tail: currentTail,
+}: {
+  data: T;
+  head: ListItemType<T>;
+  tail: ListItemType<T>;
+}) {
+  let newHead: ListItemType<T> = null;
+  let newTail: ListItemType<T> = null;
+
+  console.log('appendHelper', data, 'to', currentTail?.data);
 
   const newListItem = new ListItem({ data });
+
   if (currentTail) {
     currentTail.next = newListItem;
     newTail = newListItem;
@@ -13,15 +24,15 @@ export function appendHelper({ data, head: currentHead, tail: currentTail }: { d
     newHead = newTail = newListItem;
   }
 
-  console.log(
-    'LinkedList -> append -> newTail ',
-    newListItem?.data,
-    'after',
-    currentTail?.data,
-    'added successfully !!!'
-  );
-
-  return [ newHead, newTail];
+  // console.log(
+  //   'LinkedList -> append -> newTail ',
+  //   newListItem?.data,
+  //   'after',
+  //   currentTail?.data,
+  //   'added successfully !!!'
+  // );
+  // console.log('appendHelper new head ', newHead?.data, 'tail', newHead?.data);
+  return [newHead, newTail];
 }
 
 export function findLastHelper() {
@@ -39,10 +50,10 @@ export function findLastHelper() {
   return current;
 }
 
-export function findByContentHelper(targetContent: DataType) {
-  let current: BaseListItem = this.head;
+export function findByContentHelper<T>(targetContent: T) {
+  let current: BaseListItem<T> = this.head;
 
-  const isFound = (current: BaseListItem) => current.data === targetContent;
+  const isFound = (current: BaseListItem<T>) => current.data === targetContent;
 
   if (isFound(current)) {
     return current;
@@ -59,28 +70,38 @@ export function findByContentHelper(targetContent: DataType) {
   return null;
 }
 
-export function removeHelper({ target, previous, targetContent }: IOptions) {
+export function removeHelper<T>({ target, previous = null, targetContent }: IOptions<T>) {
   let newHead = null;
   let newTail = null;
 
+  console.log('target?', target?.data, 'head?', this.head, target === this.head);
+
   if (target) {
-    if (target === this.head) {
+    if (this.head && target === this.head) {
+      throw new Error('***error***');
       newHead = this.head.next;
+      // console.log('previous', previous?.data);
+      // console.log('target', target?.data);
+      // console.log('target.next', target.next?.data);
     } else {
-      previous.next = target.next;
+      if (previous) {
+        previous.next = target.next;
+      }
     }
-    if (target === this.tail) {
-      previous.next = null;
+    if (this.tail && target === this.tail) {
+      previous && (previous.next = null);
       newTail = previous;
     }
 
     target.next = null;
 
-    return [newHead, newTail];
+    return [newHead, newTail, target];
   } else if (targetContent) {
     const targetNode = this.findByContentHelper(targetContent);
     if (targetNode) {
       return this.remove({ target: targetNode });
+    } else {
+      throw new Error(`Node to remove not found for data: ${targetContent} !!!`);
     }
   }
 }
