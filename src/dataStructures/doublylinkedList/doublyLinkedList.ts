@@ -23,7 +23,7 @@ export class DoublyLinkedList {
   findLast = findLastHelper;
   findByContent = findByContentHelper;
   remove(params: IOptions) {
-    const [newHead, newTail] = removeHelper(params);
+    const [newHead, newTail] = removeHelper(params, this);
     if (newHead) {
       this.head = newHead;
     }

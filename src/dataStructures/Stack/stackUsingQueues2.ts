@@ -1,9 +1,9 @@
-import { Queue } from './../Queue/queue';
-import { IStack } from './IStack.d';
+import { Queue } from '../Queue/queue';
+import { IStack } from './IStack';
 
-// heavy on pop
-// easy on push
-export class StackUsingQueues<T> implements IStack<T> {
+// heavy on push
+// easy onpull
+export class StackUsingQueues2<T> implements IStack<T> {
   activeQueue = new Queue<T>();
   tempQueue = new Queue<T>();
 
@@ -14,26 +14,19 @@ export class StackUsingQueues<T> implements IStack<T> {
   }
 
   push(data) {
-    this.activeQueue.enqueue(data);
+    this.tempQueue.enqueue(data);
+    while (this.size) {
+      this.tempQueue.enqueue(this.activeQueue.dequeue());
+    }
+    this.switchQueues();
   }
 
   pop() {
     if (this.size === 0) {
       return null;
-    }
-    if (this.size === 1) {
+    } else {
       return this.activeQueue.dequeue();
     }
-
-    while (this.size > 1) {
-      this.tempQueue.enqueue(this.activeQueue.dequeue());
-    }
-
-    const popped = this.activeQueue.dequeue();
-
-    this.switchQueues();
-
-    return popped;
   }
 
   switchQueues() {
@@ -48,9 +41,8 @@ export class StackUsingQueues<T> implements IStack<T> {
 
   get output() {
     const output = [];
-    const ref = this.activeQueue;
     let data = this.pop();
-    output.push(data);
+    (data != null) && (output.push(data));
 
     while (data != null) {
       data = this.pop();

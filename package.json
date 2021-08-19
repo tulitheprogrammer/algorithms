@@ -3,7 +3,8 @@
     "BFS": "ts-node ./src/BFS.ts",
     "linked": "ts-node ./src/exercises/linkedList/ex1",
     "revlist": "ts-node ./src/exercises/linkedList/reverseLinkedList",
-    "dlinked": "ts-node ./src/exercises/doublyLinkedList/ex1"
+    "dlinked": "ts-node ./src/exercises/doublyLinkedList/ex1",
+    "stack1": "ts-node ./src/exercises/stackUsingQueues"
   },
   "dependencies": {},
   "devDependencies": {

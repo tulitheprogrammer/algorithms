@@ -1,3 +1,4 @@
+import { DoublyLinkedList } from './doublyLinkedList';
 import { DoublyListItem, ListItemType } from './doublyListItem';
 import { DataType, BaseDoublyListItem, IOptions } from './types';
 
@@ -59,18 +60,20 @@ export function findByContentHelper(targetContent: DataType) {
   return null;
 }
 
-export function removeHelper({ target, targetContent }: IOptions) {
+export function removeHelper({ target, targetContent }: IOptions, list: DoublyLinkedList) {
+  let currentHead = list.head;
+  let currentTail = null;
   let newHead = null;
   let newTail = null;
 
   if (target) {
-    if (target === this.head) {
-      const newHead = this.head.next;
+    if (target === currentHead) {
+      const newHead = currentHead.next;
     } else {
       target.previous.next = target.next;
     }
-    if (target === this.tail) {
-      const newTail = this.tail.previous;
+    if (target === currentTail) {
+      const newTail = currentTail.previous;
     } else {
       target.next.previous = target.previous;
     }

@@ -11,12 +11,12 @@ export class Queue<T> implements IQueue<T> {
   }
 
   enqueue(data: T) {
-    console.log('Queue enqueue ', data);
+    // console.log('Queue enqueue ', data);
     this.list.append(data);
   }
 
   dequeue() {
-    console.log('someone called dequeue !!!');
+    // console.log('someone called dequeue !!!');
     return this.list.remove({ target: this.list.head })?.data;
   }
 
