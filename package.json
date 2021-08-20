@@ -5,7 +5,8 @@
     "revlist": "ts-node ./src/exercises/linkedList/reverseLinkedList",
     "dlinked": "ts-node ./src/exercises/doublyLinkedList/ex1",
     "stack1": "ts-node ./src/exercises/stackUsingQueues",
-    "four-sum": "ts-node ./src/exercises/four-sum-pairs"
+    "four-sum": "ts-node ./src/exercises/four-sum-pairs",
+    "note": "ts-node ./src/exercises/hashTablesRansomNote"
   },
   "dependencies": {},
   "devDependencies": {

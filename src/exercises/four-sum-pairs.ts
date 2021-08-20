@@ -50,7 +50,7 @@ class HashTable<K = number, V = Tuple<number>> {
     }
 }
 
-function func4some(data: number[]) {
+function findWords(data: number[]) {
     const myHashTable = new HashTable<number, Tuple<number>>();
     const result = myHashTable.test(data);
     console.log('data size:', data.length, 'table size: ', myHashTable.size);
@@ -62,4 +62,4 @@ const dataLength = 10;
 const testData = Array(dataLength)
     .fill(void 0)
     .map(() => Math.floor(Math.random() * dataLength * 5));
-console.log('sum is already here?\n************************\n', testData.join('\n'), '\n************************\n', func4some(testData));
+console.log('sum is already here?\n************************\n', testData.join('\n'), '\n************************\n', findWords(testData));
